@@ -1,0 +1,62 @@
+name: dolosmeta
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      APP_ENV: production
+      BACKEND_HOST: 0.0.0.0
+      BACKEND_PORT: 8000
+      CORS_ORIGINS: http://127.0.0.1:${FRONTEND_PORT:-8080},http://localhost:${FRONTEND_PORT:-8080}
+      MAX_UPLOAD_SIZE_MB: ${MAX_UPLOAD_SIZE_MB:-250}
+      TEMP_DIR: /app/data/tmp
+      UPLOAD_RETENTION_MINUTES: ${UPLOAD_RETENTION_MINUTES:-15}
+      MAX_ANALYSIS_SECONDS: ${MAX_ANALYSIS_SECONDS:-45}
+      MAX_PARSER_RECURSION_DEPTH: ${MAX_PARSER_RECURSION_DEPTH:-32}
+      MAX_METADATA_BLOCK_MB: ${MAX_METADATA_BLOCK_MB:-32}
+      MAX_ARCHIVE_ENTRIES: ${MAX_ARCHIVE_ENTRIES:-10000}
+      MAX_DECOMPRESSED_SIZE_MB: ${MAX_DECOMPRESSED_SIZE_MB:-500}
+      MAX_STRING_SCAN_MB: ${MAX_STRING_SCAN_MB:-64}
+      MAX_METADATA_RECORDS: ${MAX_METADATA_RECORDS:-20000}
+      MAX_STRUCTURE_NODES: ${MAX_STRUCTURE_NODES:-20000}
+      MAX_EXTRACTED_STRINGS: ${MAX_EXTRACTED_STRINGS:-5000}
+      MAX_HEX_RANGE_BYTES: ${MAX_HEX_RANGE_BYTES:-65536}
+      MAX_BATCH_FILES: ${MAX_BATCH_FILES:-20}
+      ENABLE_PDF_ANALYSIS: ${ENABLE_PDF_ANALYSIS:-true}
+      ENABLE_ARCHIVE_ANALYSIS: ${ENABLE_ARCHIVE_ANALYSIS:-true}
+      ENABLE_EXECUTABLE_ANALYSIS: ${ENABLE_EXECUTABLE_ANALYSIS:-true}
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - dolosmeta_tmp:/app/data/tmp
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    init: true
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://127.0.0.1:8000}
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-8080}:8080"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    init: true
+    restart: unless-stopped
+
+volumes:
+  dolosmeta_tmp:

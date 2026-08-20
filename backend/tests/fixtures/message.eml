@@ -1,0 +1,26 @@
+From: Ada Lovelace <ada@example.invalid>
+To: Analyst <analyst@example.invalid>
+Cc: review@example.invalid
+Reply-To: replies@example.invalid
+Return-Path: <bounce@example.invalid>
+Subject: DolosMeta fixture
+Date: Thu, 20 Aug 2026 18:31:20 +0400
+Message-ID: <fixture-20260820@example.invalid>
+Received: from relay.example.invalid (192.0.2.10) by inbox.example.invalid; Thu, 20 Aug 2026 14:31:22 +0000
+Authentication-Results: inbox.example.invalid; spf=pass; dkim=pass
+DKIM-Signature: v=1; a=rsa-sha256; d=example.invalid; s=fixture; b=AA==
+User-Agent: Dolos Mailer 1.0
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary=fixture-boundary
+
+--fixture-boundary
+Content-Type: text/plain; charset=utf-8
+
+Synthetic evidence message.
+--fixture-boundary
+Content-Type: application/octet-stream; name=evidence.bin
+Content-Disposition: attachment; filename=evidence.bin
+Content-Transfer-Encoding: base64
+
+AQIDBA==
+--fixture-boundary--

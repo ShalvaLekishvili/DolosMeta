@@ -1,0 +1,3 @@
+DolosMeta fixture
+Contact: analyst@example.invalid
+https://example.invalid/path
