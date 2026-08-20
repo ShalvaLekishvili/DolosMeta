@@ -24,7 +24,7 @@ export function asRecord(value: unknown): JsonRecord {
     : {};
 }
 
-export function asArray<T = unknown>(value: unknown): T[] {
+export function asArray<T = Finding | string>(value: unknown): T[] {
   return Array.isArray(value) ? (value as T[]) : [];
 }
 
