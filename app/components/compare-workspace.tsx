@@ -136,7 +136,7 @@ export function CompareWorkspace() {
   const [working, setWorking] = useState(false);
   const [error, setError] = useState("");
   const [inspection, setInspection] = useState<AnalysisResult>();
-  const controller = useRef<AbortController>();
+  const controller = useRef<AbortController | null>(null);
   const rows = useMemo(() => resultA && resultB ? compareResults(resultA, resultB) : [], [resultA, resultB]);
 
   async function runComparison() {
