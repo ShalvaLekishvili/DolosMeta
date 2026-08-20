@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: dolosmeta-api
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile.backend
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: checksPass
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: TEMP_DIR
+        value: /app/data/tmp
+      - key: CORS_ORIGINS
+        sync: false
