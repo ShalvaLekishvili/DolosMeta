@@ -112,7 +112,7 @@ export function BatchWorkspace() {
   const [working, setWorking] = useState(false);
   const [error, setError] = useState("");
   const [openResult, setOpenResult] = useState<AnalysisResult>();
-  const controller = useRef<AbortController>();
+  const controller = useRef<AbortController | null>(null);
   const completeResults = items.flatMap((item) => (item.result ? [item.result] : []));
   const queued = items.filter((item) => item.status === "queued" || item.status === "error");
 
