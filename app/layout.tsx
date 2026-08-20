@@ -14,13 +14,20 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  process.env.DEPLOY_PRIME_URL ??
+  process.env.URL ??
+  "http://127.0.0.1:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3000"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "DolosMeta — Universal File Metadata Analyzer",
     template: "%s",
   },
-  description: "Inspect metadata, embedded information, file structure, privacy exposure, timestamps, and forensic indicators.",
+  description:
+    "Inspect metadata, embedded information, file structure, privacy exposure, timestamps, and forensic indicators.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -28,14 +35,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     title: "DolosMeta — See what your files reveal",
-    description: "Inspect hidden metadata, timestamps, privacy exposure, and file structure with a native, local-first analysis engine.",
-    images: [{ url: "/og.png", width: 1731, height: 909, alt: "DolosMeta — See what your files reveal" }],
+    description:
+      "Inspect hidden metadata, timestamps, privacy exposure, and file structure with a native, local-first analysis engine.",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "DolosMeta — See what your files reveal",
-    description: "Inspect hidden metadata, timestamps, privacy exposure, and file structure with a native, local-first analysis engine.",
-    images: ["/og.png"],
+    description:
+      "Inspect hidden metadata, timestamps, privacy exposure, and file structure with a native, local-first analysis engine.",
   },
 };
 
@@ -46,9 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <PreferencesProvider>
           {children}
           <EntrancePreloader />

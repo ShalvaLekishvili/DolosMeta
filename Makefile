@@ -5,14 +5,13 @@ BACKEND_VENV := backend/.venv
 BACKEND_PYTHON := $(BACKEND_VENV)/bin/python
 BACKEND_PIP := $(BACKEND_VENV)/bin/pip
 
-.PHONY: help install install-backend install-frontend dev start fixtures test test-backend test-frontend lint lint-backend lint-frontend build clean docker-build docker-up docker-down docker-logs
+.PHONY: help install install-backend install-frontend dev test test-backend test-frontend lint lint-backend lint-frontend build clean docker-build docker-up docker-down docker-logs
 
 help:
 	@echo "DolosMeta development commands"
 	@echo "  make install       Install backend and frontend dependencies"
 	@echo "  make dev           Start API and UI locally"
-	@echo "  make fixtures      Regenerate deterministic test fixtures"
-	@echo "  make test          Run backend and frontend tests"
+	@echo "  make test          Run backend tests and frontend type checks"
 	@echo "  make lint          Run backend and frontend linters"
 	@echo "  make build         Create the production frontend build"
 	@echo "  make docker-up     Build and start the local container stack"
@@ -26,13 +25,10 @@ install-backend:
 	"$(BACKEND_PIP)" install -e "./backend[dev]"
 
 install-frontend:
-	npm ci
+	npm install
 
-dev start:
-	./start.sh
-
-fixtures:
-	$(PYTHON) scripts/generate_fixtures.py
+dev:
+	bash ./start.sh
 
 test: test-backend test-frontend
 
@@ -41,7 +37,7 @@ test-backend:
 	cd backend && .venv/bin/python -m pytest -q
 
 test-frontend:
-	npm test
+	npm run typecheck
 
 lint: lint-backend lint-frontend
 

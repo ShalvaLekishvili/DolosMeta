@@ -1,17 +1,18 @@
 [build]
-  command = "npm ci && npm run build"
-  publish = "dist/client"
+  command = "npm run build"
 
 [build.environment]
-  NODE_VERSION = "22.13.0"
-  NEXT_PUBLIC_API_BASE_URL = "https://your-backend.example.com"
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"
 
-[context.deploy-preview.environment]
-  NEXT_PUBLIC_API_BASE_URL = "https://your-backend.example.com"
+# Set NEXT_PUBLIC_API_BASE_URL in Netlify's environment variables after the
+# FastAPI backend has a public HTTPS URL. Do not commit production secrets here.
 
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Cross-Origin-Opener-Policy = "same-origin"

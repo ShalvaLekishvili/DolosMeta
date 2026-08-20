@@ -14,7 +14,7 @@ export function AnalyzerWorkspace() {
   const [file, setFile] = useState<File>();
   const [result, setResult] = useState<AnalysisResult>();
   const [error, setError] = useState("");
-  const controller = useRef<AbortController>();
+  const controller = useRef<AbortController | null>(null);
 
   async function start(selected: File) {
     controller.current?.abort();
