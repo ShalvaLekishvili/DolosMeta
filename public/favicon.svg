@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DolosMeta">
+  <rect width="64" height="64" rx="14" fill="#0b0d10"/>
+  <path d="M17 16h14c12 0 20 6 20 16s-8 16-20 16H17V16Zm13 24c7 0 11-3 11-8s-4-8-11-8h-3v16h3Z" fill="#f4f7fb"/>
+  <circle cx="49" cy="17" r="4" fill="#7aa2ff"/>
+</svg>
