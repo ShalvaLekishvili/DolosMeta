@@ -4,11 +4,21 @@ import { asArray, asRecord, normalizeAnalysisPayload } from "./format";
 import type { AnalysisResult, ParserCapability } from "./types";
 
 const configuredApiBase =
-  typeof process !== "undefined" ? process.env.NEXT_PUBLIC_API_BASE_URL : undefined;
+  typeof process !== "undefined" ? process.env.NEXT_PUBLIC_API_BASE_URL?.trim() : undefined;
 
-export const API_BASE_URL = (configuredApiBase || "http://127.0.0.1:8000").replace(/\/$/, "");
+const fallbackApiBase =
+  typeof process !== "undefined" && process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:8000"
+    : "";
+
+export const API_BASE_URL = (configuredApiBase || fallbackApiBase).replace(/\/$/, "");
 
 function apiUrl(path: string): string {
+  if (!API_BASE_URL) {
+    throw new Error(
+      "The DolosMeta analysis API is not configured for this deployment. Set NEXT_PUBLIC_API_BASE_URL to the public HTTPS URL of the FastAPI backend and redeploy the site.",
+    );
+  }
   return API_BASE_URL + (path.startsWith("/") ? path : "/" + path);
 }
 
