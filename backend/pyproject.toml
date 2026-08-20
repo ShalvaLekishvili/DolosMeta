@@ -24,9 +24,6 @@ dev = [
   "ruff>=0.6,<1",
 ]
 
-[project.scripts]
-dolosmeta = "dolosmeta.cli:main"
-
 [tool.hatch.build.targets.wheel]
 packages = ["dolosmeta"]
 
@@ -47,4 +44,3 @@ python_version = "3.9"
 warn_unused_configs = true
 check_untyped_defs = true
 ignore_missing_imports = true
-
