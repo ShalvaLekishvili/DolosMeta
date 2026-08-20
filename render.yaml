@@ -3,11 +3,18 @@ services:
     name: dolosmeta-api
     runtime: docker
     plan: free
+    region: frankfurt
     branch: main
     dockerfilePath: ./Dockerfile.backend
     healthCheckPath: /api/v1/health
     autoDeployTrigger: checksPass
     maxShutdownDelaySeconds: 30
+    buildFilter:
+      paths:
+        - backend/**
+        - Dockerfile.backend
+        - render.yaml
+      ignoredPaths: []
     envVars:
       - key: APP_ENV
         value: production
